@@ -41,8 +41,8 @@ keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left
 keymap.set("n", "<C-a>", "gg<S-v>G")
 
 -- massive time saver with diagnostics
-keymap.set("n", "]n", "<cmd>cnext<CR>zz")
-keymap.set("n", "[p", "<cmd>cprev<CR>zz")
+keymap.set("n", "]q", "<cmd>cnext<CR>zz")
+keymap.set("n", "[q", "<cmd>cprev<CR>zz")
 
 -- Increment/decrement number under cursor
 keymap.set("n", "+", "<C-a>")
