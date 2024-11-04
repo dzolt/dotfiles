@@ -5,14 +5,19 @@
 -- local builtin = require("telescope.builtin")
 local keymap = vim.keymap
 
--- lazy -- NOT WORKING WHY??
+-- enable inlay hint
+keymap.set('n', '<leader>ch', function()
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end, { desc = '[C]ode Inlay [H]ints' })
+
+-- lazy
 keymap.set('n', '<leader>l', '<cmd>Lazy<cr>', { desc = 'Lazy' })
 
 -- disable recent commands window
 keymap.set({ 'n', 'v', 's' }, 'q:', '<Nop>')
 
 -- split window
-keymap.set('n', '<leader>w\\', '<C-W>v') --{ desc = 'Split window right', remap = true })
+keymap.set('n', '<leader>w\\', '<C-W>v', { desc = 'Split window right', remap = true })
 
 -- telescope
 -- keymap.set("n", "<leader>fw", function()
@@ -54,7 +59,7 @@ keymap.set('n', '-', '<C-x>')
 -- save file
 keymap.set({ 'i', 'x', 'n', 's' }, '<C-s>', '<cmd>w<cr><esc>', { desc = 'Save File' })
 
--- quit -- NOT WORKING WHYYY?
+-- quit all
 keymap.set('n', '<leader>qq', '<cmd>qa<cr>', { desc = 'Quit All' })
 
 -- Move to window using the <ctrl> hjkl keys
@@ -71,54 +76,6 @@ keymap.set('i', '<A-k>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move Up' })
 keymap.set('v', '<A-j>', ":m '>+1<cr>gv=gv", { desc = 'Move Down' })
 keymap.set('v', '<A-k>', ":m '<-2<cr>gv=gv", { desc = 'Move Up' })
 
--- buffers not working -- why??
--- local bufremove = function(buf)
---   buf = buf or 0
---   buf = buf == 0 and vim.api.nvim_get_current_buf() or buf
---
---   if vim.bo.modified then
---     local choice = vim.fn.confirm(('Save changes to %q?'):format(vim.fn.bufname()), '&Yes\n&No\n&Cancel')
---     if choice == 0 or choice == 3 then -- 0 for <Esc>/<C-c> and 3 for Cancel
---       return
---     end
---     if choice == 1 then -- Yes
---       vim.cmd.write()
---     end
---   end
---
---   for _, win in ipairs(vim.fn.win_findbuf(buf)) do
---     vim.api.nvim_win_call(win, function()
---       if not vim.api.nvim_win_is_valid(win) or vim.api.nvim_win_get_buf(win) ~= buf then
---         return
---       end
---       -- Try using alternate buffer
---       local alt = vim.fn.bufnr '#'
---       if alt ~= buf and vim.fn.buflisted(alt) == 1 then
---         vim.api.nvim_win_set_buf(win, alt)
---         return
---       end
---
---       -- Try using previous buffer
---       local has_previous = pcall(vim.cmd, 'bprevious')
---       if has_previous and buf ~= vim.api.nvim_win_get_buf(win) then
---         return
---       end
---
---       -- Create new listed buffer
---       local new_buf = vim.api.nvim_create_buf(true, false)
---       vim.api.nvim_win_set_buf(win, new_buf)
---     end)
---   end
---   if vim.api.nvim_buf_is_valid(buf) then
---     pcall(vim.cmd, 'bdelete! ' .. buf)
---   end
--- end
---
--- keymap.set('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev Buffer' })
--- keymap.set('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next Buffer' })
--- keymap.set('n', '<leader>bb', '<cmd>e #<cr>', { desc = 'Switch to Other Buffer' })
--- keymap.set('n', '<leader>bd', bufremove, { desc = 'Delete Buffer' })
-
 -- Clear search with <esc>
 keymap.set({ 'i', 'n' }, '<esc>', '<cmd>noh<cr><esc>', { desc = 'Escape and Clear hlsearch' })
 
@@ -130,6 +87,7 @@ local diagnostic_goto = function(next, severity)
     go { severity = severity }
   end
 end
+
 keymap.set('n', '<leader>cd', vim.diagnostic.open_float, { desc = 'Line Diagnostics' })
 keymap.set('n', ']d', diagnostic_goto(true), { desc = 'Next Diagnostic' })
 keymap.set('n', '[d', diagnostic_goto(false), { desc = 'Prev Diagnostic' })

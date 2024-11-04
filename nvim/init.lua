@@ -1,11 +1,11 @@
--- import options
-require 'config/keymaps'
-require 'config/opt'
-
 -- seting leader and local leader
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
+
+-- import options
+require 'config/opt'
+require 'config/keymaps'
 
 -- bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'

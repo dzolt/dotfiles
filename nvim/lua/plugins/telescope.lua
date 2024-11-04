@@ -28,9 +28,9 @@ return {
             theme = 'ivy',
             initial_mode = 'normal',
             -- Disables preview
-            -- layout_config = {
-            --   preview_cutoff = 9999,
-            -- },
+            layout_config = {
+              preview_cutoff = 9999,
+            },
           },
         },
         defaults = {
@@ -80,7 +80,7 @@ return {
 
       -- Consider Trouble instead of telescope diagnostics
       map('<leader>xx', function()
-        builtin.diagnostics()
+        builtin.diagnostics { wrap_results = true }
       end, 'Diagnostics')
 
       map('<leader>ff', function()
