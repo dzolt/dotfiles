@@ -8,6 +8,10 @@ util.cowboy()
 local builtin = require("telescope.builtin")
 local keymap = vim.keymap
 
+keymap.set("n", "<leader>ch", function()
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end, { desc = "[C]ode [H]ints" })
+
 -- split window
 keymap.set("n", "<leader>w\\", "<C-W>v", { desc = "Split window right", remap = true })
 
