@@ -1,7 +1,5 @@
-SOME LINTER nvim-lint?????
 
 
-yanky
 
 neogen
 
@@ -9,48 +7,11 @@ aerial
 
 persistance
 
-grug far
-
-navic
 
 refactoring/primageoan
 
-mason -> pretteir (ensure_installed) -> also in conform adn none-ls?
 
-eslint
 
-return {
-  "echasnovski/mini.surround",
-  recommended = true,
-  keys = function(_, keys)
-    -- Populate the keys based on the user's options
-    local opts = LazyVim.opts("mini.surround")
-    local mappings = {
-      { opts.mappings.add, desc = "Add Surrounding", mode = { "n", "v" } },
-      { opts.mappings.delete, desc = "Delete Surrounding" },
-      { opts.mappings.find, desc = "Find Right Surrounding" },
-      { opts.mappings.find_left, desc = "Find Left Surrounding" },
-      { opts.mappings.highlight, desc = "Highlight Surrounding" },
-      { opts.mappings.replace, desc = "Replace Surrounding" },
-      { opts.mappings.update_n_lines, desc = "Update `MiniSurround.config.n_lines`" },
-    }
-    mappings = vim.tbl_filter(function(m)
-      return m[1] and #m[1] > 0
-    end, mappings)
-    return vim.list_extend(mappings, keys)
-  end,
-  opts = {
-    mappings = {
-      add = "gsa", -- Add surrounding in Normal and Visual modes
-      delete = "gsd", -- Delete surrounding
-      find = "gsf", -- Find surrounding (to the right)
-      find_left = "gsF", -- Find surrounding (to the left)
-      highlight = "gsh", -- Highlight surrounding
-      replace = "gsr", -- Replace surrounding
-      update_n_lines = "gsn", -- Update `n_lines`
-    },
-  },
-}
 
 
 return {
@@ -66,28 +27,6 @@ return {
   },
 }
 
-return {
-  "MagicDuck/grug-far.nvim",
-  opts = { headerMaxWidth = 80 },
-  cmd = "GrugFar",
-  keys = {
-    {
-      "<leader>sr",
-      function()
-        local grug = require("grug-far")
-        local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
-        grug.open({
-          transient = true,
-          prefills = {
-            filesFilter = ext and ext ~= "" and "*." .. ext or nil,
-          },
-        })
-      end,
-      mode = { "n", "v" },
-      desc = "Search and Replace",
-    },
-  },
-}
 
 return {
   "folke/todo-comments.nvim",
@@ -164,54 +103,4 @@ return
       end,
     },
   }
-
-return 
- -- better diagnostics list and others
-  {
-    "folke/trouble.nvim",
-    cmd = { "Trouble" },
-    opts = {
-      modes = {
-        lsp = {
-          win = { position = "right" },
-        },
-      },
-    },
-    keys = {
-      { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
-      { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)" },
-      { "<leader>cs", "<cmd>Trouble symbols toggle<cr>", desc = "Symbols (Trouble)" },
-      { "<leader>cS", "<cmd>Trouble lsp toggle<cr>", desc = "LSP references/definitions/... (Trouble)" },
-      { "<leader>xL", "<cmd>Trouble loclist toggle<cr>", desc = "Location List (Trouble)" },
-      { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix List (Trouble)" },
-      {
-        "[q",
-        function()
-          if require("trouble").is_open() then
-            require("trouble").prev({ skip_groups = true, jump = true })
-          else
-            local ok, err = pcall(vim.cmd.cprev)
-            if not ok then
-              vim.notify(err, vim.log.levels.ERROR)
-            end
-          end
-        end,
-        desc = "Previous Trouble/Quickfix Item",
-      },
-      {
-        "]q",
-        function()
-          if require("trouble").is_open() then
-            require("trouble").next({ skip_groups = true, jump = true })
-          else
-            local ok, err = pcall(vim.cmd.cnext)
-            if not ok then
-              vim.notify(err, vim.log.levels.ERROR)
-            end
-          end
-        end,
-        desc = "Next Trouble/Quickfix Item",
-      },
-    },
-  },
 

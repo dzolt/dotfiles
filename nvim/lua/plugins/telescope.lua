@@ -32,6 +32,16 @@ return {
               preview_cutoff = 9999,
             },
           },
+          live_grep = {
+            file_ignore_patterns = { 'node_modules', '.git', '.venv' },
+            additional_args = function(_)
+              return { '--hidden' }
+            end,
+          },
+          find_files = {
+            file_ignore_patterns = { 'node_modules', '.git', '.venv' },
+            hidden = true,
+          },
         },
         defaults = {
           wrap_results = true,
@@ -78,11 +88,6 @@ return {
       --   }
       -- end, '[F]ile [E]xplorer')
 
-      -- Consider Trouble instead of telescope diagnostics
-      map('<leader>xx', function()
-        builtin.diagnostics { wrap_results = true }
-      end, 'Diagnostics')
-
       map('<leader>ff', function()
         builtin.find_files { hidden = true }
       end, '[F]ind [F]iles')
@@ -108,13 +113,6 @@ return {
           previewer = false,
         })
       end, '[/] Fuzzily search in current buffer')
-
-      map('<leader>s/', function()
-        builtin.live_grep {
-          grep_open_files = true,
-          prompt_title = 'Live Grep in Open Files',
-        }
-      end, '[S]earch [/] in Open Files')
 
       -- Fuzzy find all the symbols in current document.
       -- Symbols are things like variables, functions, types, etc.
