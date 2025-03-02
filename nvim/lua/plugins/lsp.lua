@@ -18,7 +18,8 @@ return {
 
       { 'j-hui/fidget.nvim', opts = {} },
 
-      'hrsh7th/cmp-nvim-lsp',
+      -- 'hrsh7th/cmp-nvim-lsp',
+      'saghen/blink.cmp',
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -99,7 +100,7 @@ return {
       })
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+      capabilities = vim.tbl_deep_extend('force', capabilities, require('blink.cmp').get_lsp_capabilities())
 
       local servers = {
         gopls = {
@@ -194,6 +195,14 @@ return {
           end,
         },
       }
+
+      local lspconfig = require 'lspconfig'
+      for server, config in pairs(servers) do
+        -- passing config.capabilities to blink.cmp merges with the capabilities in your
+        -- `opts[server].capabilities, if you've defined it
+        config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+        lspconfig[server].setup(config)
+      end
     end,
   },
 }

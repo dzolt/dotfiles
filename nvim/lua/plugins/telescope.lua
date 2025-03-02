@@ -50,16 +50,6 @@ return {
           sorting_strategy = 'ascending',
         },
         extensions = {
-          -- file_browser = {
-          --   hijack_netrw = true,
-          --   theme = 'dropdown',
-          --   mappings = {
-          --     ['n'] = {
-          --       ['a'] = fb_actions.create,
-          --       ['h'] = fb_actions.goto_parent_dir,
-          --     },
-          --   },
-          -- },
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
@@ -73,20 +63,6 @@ return {
       local map = function(keys, func, desc)
         vim.keymap.set('n', keys, func, { desc = 'Telescope: ' .. desc })
       end
-
-      -- File Explorer with file_browser extension
-      -- map('<leader>fe', function()
-      --   telescope.extensions.file_browser.file_browser {
-      --     path = '%:p:h',
-      --     cwd = vim.fn.expand '%:p:h',
-      --     respect_gitignore = false,
-      --     hidden = true,
-      --     grouped = true,
-      --     previewer = false,
-      --     initial_mode = 'normal',
-      --     layout_config = { height = 45 },
-      --   }
-      -- end, '[F]ile [E]xplorer')
 
       map('<leader>ff', function()
         builtin.find_files { hidden = true }
@@ -103,7 +79,7 @@ return {
       map('<leader>fR', builtin.oldfiles, '[F]ind [R]ecent (Root Dir)')
 
       map('<leader>/', function()
-        builtin.live_grep { cwd = false }
+        builtin.live_grep { cwd = false, file_ignore_patterns = { '*%-lock.*' } }
       end, 'Live Grep (Root Dir)')
 
       map('<leader>b/', function()
