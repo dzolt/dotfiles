@@ -5,6 +5,7 @@ local act = wezterm.action
 
 
 
+
 local config = {
 }
 
